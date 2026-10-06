@@ -2102,6 +2102,10 @@ public:
     void commitPotentialTapFailed();
     void didNotHandleTapAsClick(const WebCore::IntPoint&);
     void didHandleTapAsHover();
+#if HAVE(APPKIT_GESTURES_SUPPORT)
+    void setHoverActivatedByClickBounds(std::optional<WebCore::IntRect>&&);
+    const std::optional<WebCore::IntRect>& hoverActivatedByClickBounds() const { return m_hoverActivatedByClickBounds; }
+#endif
     void didCompleteSyntheticClick();
     void disableDoubleTapGesturesDuringTapIfNecessary(TapIdentifier);
     void handleSmartMagnificationInformationForPotentialTap(TapIdentifier, const WebCore::FloatRect& renderRect, bool fitEntireRect, double viewportMinimumScale, double viewportMaximumScale, bool nodeIsRootLevel, bool nodeIsPluginElement);
@@ -4261,6 +4265,9 @@ private:
 #endif
 #if PLATFORM(MAC)
     std::unique_ptr<ViewWindowCoordinates> m_viewWindowCoordinates;
+#endif
+#if HAVE(APPKIT_GESTURES_SUPPORT)
+    std::optional<WebCore::IntRect> m_hoverActivatedByClickBounds;
 #endif
 
     std::optional<WebCore::ScrollbarOverlayStyle> m_scrollbarOverlayStyle;
